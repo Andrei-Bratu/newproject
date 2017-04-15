@@ -1,6 +1,6 @@
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.JLabel; 
 
 public class ClientGUI extends JFrame {
 
@@ -11,6 +11,7 @@ public class ClientGUI extends JFrame {
 	
 	public ClientGUI()
 	{
+		
 		JFrame frame = new JFrame("Menu"); // frame = obiect - container
 		
 		login = new JButton("Login"); // nou buton text
