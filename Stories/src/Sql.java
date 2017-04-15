@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Random;
 
 public class Sql {
 	String url = "jdbc:mysql://localhost:3306/db?verifyServerCertificate=false&useSSL=true";
@@ -53,6 +54,31 @@ public class Sql {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public void getStory() {
+		try {
+			final Connection con1 = DriverManager.getConnection(url, user, pas);
+			Statement st = con1.createStatement();
+
+			ResultSet idMax = st.executeQuery("select max(idst) from stories");
+			int maxid = 1;
+			if (idMax.next()) {
+				maxid = idMax.getInt(maxid);
+			}
+			Random r = new Random();
+			int Low = 0;
+			int High = maxid + 1;
+			int Result = r.nextInt(High - Low) + Low;
+			ResultSet rez = st.executeQuery("select * from stories where idst = " + Result);
+			if (rez.next()) {
+				System.out.println(rez.getString("Full"));
+			}
+		} catch (final SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }
