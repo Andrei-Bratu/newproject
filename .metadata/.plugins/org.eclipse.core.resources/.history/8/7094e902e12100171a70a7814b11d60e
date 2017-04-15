@@ -1,0 +1,22 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class Sql {
+	public void register() {
+		String url = "jdbc:mysql://localhost:3306/db";
+		try {
+			final Connection con1 = DriverManager.getConnection(url, "root", "MySQLpassdrootV:1.0");
+			Statement st = con1.createStatement();
+			String sql = "INSERT INTO player (idplayer, playercol)" + "VALUES (10, 'dsf')";
+			st.executeUpdate(sql);
+			// st.execute("DELETE FROM db.player WHERE ID =" + 1);
+			/// ResultSet res = st.executeQuery("select* from player");
+		} catch (final SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}
