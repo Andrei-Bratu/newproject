@@ -32,27 +32,24 @@ public class Sql {
 		}
 	}
 
-	public String login(String username, String pass) {
+	public boolean login(String username, String pass) {
 		try {
 			final Connection con1 = DriverManager.getConnection(url, user, pas);
 			Statement st = con1.createStatement();
-			PreparedStatement pst = con1.prepareStatement("select * from player where Username = ?");
+			PreparedStatement pst = con1.prepareStatement("select * from player where name = ?"); 
 			pst.setString(1, username);
 			ResultSet rez = pst.executeQuery();
-			if (rez.next()) {
-				if (rez.getString("Password").equals(pass)) {
-					return "Can login";
-				} else {
-					return "Wrong pas";
-				}
-			} else {
-				return "Wrong user";
+			ResultSet res = st.executeQuery("select Password from player");
+			while (res.next()) {
+				System.out.println(res.getInt("idplayer") + ", " + res.getString("Username"));
 			}
+			con1.close();
 		} catch (final SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+
+		return true;
 	}
 
 }

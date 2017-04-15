@@ -45,8 +45,6 @@ public class Sql {
 				} else {
 					return "Wrong pas";
 				}
-			} else {
-				return "Wrong user";
 			}
 		} catch (final SQLException e) {
 			// TODO Auto-generated catch block

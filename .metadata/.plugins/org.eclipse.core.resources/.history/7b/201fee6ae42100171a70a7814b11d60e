@@ -6,13 +6,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Sql {
-	String url = "jdbc:mysql://localhost:3306/db?verifyServerCertificate=false&useSSL=true";
-	String user = "root";
-	String pas = "MySQLpassdrootV:1.0";
-
 	public void register(String username, String pass) {
+		String url = "jdbc:mysql://localhost:3306/db?verifyServerCertificate=false&useSSL=true";
 		try {
-			final Connection con1 = DriverManager.getConnection(url, user, pas);
+			final Connection con1 = DriverManager.getConnection(url, "root", "MySQLpassdrootV:1.0");
 			Statement st = con1.createStatement();
 			String sql = "INSERT INTO player (Username, Password)" + "VALUES (?,?)";
 			PreparedStatement pst = con1.prepareStatement(sql);
@@ -31,28 +28,8 @@ public class Sql {
 			e.printStackTrace();
 		}
 	}
-
-	public String login(String username, String pass) {
-		try {
-			final Connection con1 = DriverManager.getConnection(url, user, pas);
-			Statement st = con1.createStatement();
-			PreparedStatement pst = con1.prepareStatement("select * from player where Username = ?");
-			pst.setString(1, username);
-			ResultSet rez = pst.executeQuery();
-			if (rez.next()) {
-				if (rez.getString("Password").equals(pass)) {
-					return "Can login";
-				} else {
-					return "Wrong pas";
-				}
-			} else {
-				return "Wrong user";
-			}
-		} catch (final SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+	public boolean login(String username, String pass) {
+		return true;
 	}
 
 }
