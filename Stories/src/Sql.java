@@ -11,9 +11,17 @@ public class Sql {
 	String user = "root";
 	String pas = "MySQLpassdrootV:1.0";
 
-	public void register(String username, String pass) {
+	public boolean register(String username, String pass) {
 		try {
 			final Connection con1 = DriverManager.getConnection(url, user, pas);
+
+			PreparedStatement pst1 = con1.prepareStatement("select * from player where Username = ?");
+			pst1.setString(1, username);
+			ResultSet rez = pst1.executeQuery();
+			if (rez.next()) {
+				return false;
+			}
+
 			Statement st = con1.createStatement();
 			String sql = "INSERT INTO player (Username, Password)" + "VALUES (?,?)";
 			PreparedStatement pst = con1.prepareStatement(sql);
@@ -27,16 +35,18 @@ public class Sql {
 				System.out.println(res.getInt("idplayer") + ", " + res.getString("Username"));
 			}
 			con1.close();
+			return true;
 		} catch (final SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	public String login(String username, String pass) {
 		try {
 			final Connection con1 = DriverManager.getConnection(url, user, pas);
-			Statement st = con1.createStatement();
+
 			PreparedStatement pst = con1.prepareStatement("select * from player where Username = ?");
 			pst.setString(1, username);
 			ResultSet rez = pst.executeQuery();
@@ -44,7 +54,7 @@ public class Sql {
 				if (rez.getString("Password").equals(pass)) {
 					return "Can login";
 				} else {
-					return "Wrong pas";
+					return "Wrong password";
 				}
 			} else {
 				return "Wrong user";
